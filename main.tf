@@ -32,10 +32,10 @@ resource "aws_key_pair" "webKey" {
 
 # Create VM1 in public subnet 1 as displayed in Architecture Diagram
 resource "aws_instance" "webServer1" {
-  ami                         = data.aws_ami.latest_amazon_linux.id
-  instance_type               = lookup(var.instanceType, var.env)
-  key_name                    = aws_key_pair.webKey.key_name
-//  subnet_id                   = data.aws_subnet.public_subnet.id
+  ami           = data.aws_ami.latest_amazon_linux.id
+  instance_type = lookup(var.instanceType, var.env)
+  key_name      = aws_key_pair.webKey.key_name
+  //  subnet_id                   = data.aws_subnet.public_subnet.id
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
   //  user_data                   = file("${path.root}/install_httpd.sh")
@@ -74,4 +74,24 @@ resource "aws_security_group" "my_sg" {
       "Name" = "${var.prefix}-sg"
     }
   )
+}
+
+# Create AWS ECR repository to store images
+resource "aws_ecr_repository" "web_repo" {
+  name                 = "clo835-assignment1_web_repo"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+# Create AWS ECR repository to store images
+resource "aws_ecr_repository" "mysql_repo" {
+  name                 = "clo835-assignment1_msql_repo"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
