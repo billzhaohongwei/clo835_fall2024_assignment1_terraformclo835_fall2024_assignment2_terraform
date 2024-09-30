@@ -48,16 +48,47 @@ resource "aws_instance" "webServer1" {
 
 # Security Group
 resource "aws_security_group" "my_sg" {
-  name        = "allow_ssh"
-  description = "Allow SSH inbound traffic"
+  name        = "allow_ssh_http"
+  description = "Allow SSH and http inbound traffic on specific ports"
   vpc_id      = data.aws_vpc.default.id
 
+  # Allow SSH traffic from everywhere
   ingress {
     description      = "SSH from everywhere"
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  # Allow HTTP traffic on port 8081
+  ingress {
+    description      = "Allow HTTP traffic on port 8081"
+    from_port        = 8081
+    to_port          = 8081
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] # Allow from anywhere (use cautiously)
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  # Allow HTTP traffic on port 8082
+  ingress {
+    description      = "Allow HTTP traffic on port 8082"
+    from_port        = 8082
+    to_port          = 8082
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] # Allow from anywhere (use cautiously)
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  # Allow HTTP traffic on port 8083
+  ingress {
+    description      = "Allow HTTP traffic on port 8083"
+    from_port        = 8083
+    to_port          = 8083
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] # Allow from anywhere (use cautiously)
     ipv6_cidr_blocks = ["::/0"]
   }
 
