@@ -76,9 +76,9 @@ resource "aws_security_group" "my_sg" {
   )
 }
 
-# Create AWS ECR repository to store images
-resource "aws_ecr_repository" "web_repo" {
-  name                 = "clo835-assignment1_web_repo"
+# Create AWS ECR repository to store webapp images
+resource "aws_ecr_repository" "webapp_repo" {
+  name                 = "clo835-assignment1_webapp_repo"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -86,7 +86,7 @@ resource "aws_ecr_repository" "web_repo" {
   }
 }
 
-# Create AWS ECR repository to store images
+# Create AWS ECR repository to store MYSQL images
 resource "aws_ecr_repository" "mysql_repo" {
   name                 = "clo835-assignment1_msql_repo"
   image_tag_mutability = "MUTABLE"
