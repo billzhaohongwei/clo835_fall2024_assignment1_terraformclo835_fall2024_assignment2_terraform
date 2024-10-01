@@ -38,7 +38,7 @@ resource "aws_instance" "webServer1" {
   //  subnet_id                   = data.aws_subnet.public_subnet.id
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
-  //  user_data                   = file("${path.root}/install_httpd.sh")
+  user_data                   = file("${path.root}/install_docker.sh")
   tags = merge(local.default_tags,
     {
       "Name" = "${var.prefix}-${var.env}-Webserver1"
@@ -109,7 +109,7 @@ resource "aws_security_group" "my_sg" {
 
 # Create AWS ECR repository to store webapp images
 resource "aws_ecr_repository" "webapp_repo" {
-  name                 = "clo835-assignment1_webapp_repo"
+  name                 = "clo835-assignment1-webapp-repo"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -119,7 +119,7 @@ resource "aws_ecr_repository" "webapp_repo" {
 
 # Create AWS ECR repository to store MYSQL images
 resource "aws_ecr_repository" "mysql_repo" {
-  name                 = "clo835-assignment1_msql_repo"
+  name                 = "clo835-assignment1-mysql-repo"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
