@@ -10,7 +10,7 @@ variable "defaultTags" {
 
 # Prefix to identify resources
 variable "prefix" {
-  default     = "Assignment1"
+  default     = "Assignment2"
   type        = string
   description = "Name prefix"
 }
@@ -25,9 +25,9 @@ variable "env" {
 # Instance Type
 variable "instanceType" {
   default = {
-    "Prod"    = "t2.micro"
-    "Dev"     = "t2.micro"
-    "Staging" = "t2.micro"
+    "Prod"    = "t3.small"
+    "Dev"     = "t3.small"
+    "Staging" = "t3.small"
   }
   type        = map(string)
   description = "Type of EC2 instance"
@@ -35,7 +35,7 @@ variable "instanceType" {
 
 #variable to declare keyname
 variable "keyName" {
-  default     = "assignment1"
+  default     = "a2"
   type        = string
   description = "SSH key pair's name"
 }

@@ -38,7 +38,7 @@ resource "aws_instance" "webServer1" {
   //  subnet_id                   = data.aws_subnet.public_subnet.id
   associate_public_ip_address = false
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
-  user_data                   = file("${path.root}/install_docker.sh")
+  user_data                   = file("${path.root}/install_kind.sh")
   tags = merge(local.default_tags,
     {
       "Name" = "${var.prefix}-${var.env}-Webserver1"
