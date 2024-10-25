@@ -37,5 +37,5 @@ sudo chown ec2-user:ec2-user /home/ec2-user/kind.yaml
 sleep 5
 
 # Create cluster
-sudo -u ec2-user kind create cluster --config /home/ec2-user/kind.yaml
+sudo -u ec2-user /usr/local/bin/kind create cluster --config /home/ec2-user/kind.yaml
 echo "Script completed."
