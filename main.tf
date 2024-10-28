@@ -30,13 +30,16 @@ resource "aws_key_pair" "webKey" {
   public_key = file("${var.keyName}.pub")
 }
 
-# Create VM1 in public subnet 1 as displayed in Architecture Diagram
+# Create VM to host kind cluster
 resource "aws_instance" "webServer1" {
   ami           = data.aws_ami.latest_amazon_linux.id
   instance_type = lookup(var.instanceType, var.env)
   key_name      = aws_key_pair.webKey.key_name
-  //  subnet_id                   = data.aws_subnet.public_subnet.id
   associate_public_ip_address = false
+  iam_instance_profile = "LabInstanceProfile"
+  disable_api_termination = false
+  ebs_optimized           = true
+  
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
   user_data                   = file("${path.root}/install_kind.sh")
   tags = merge(local.default_tags,
@@ -62,8 +65,9 @@ resource "aws_security_group" "my_sg" {
     ipv6_cidr_blocks = ["::/0"]
   }
   
+  # Allow NodePort to use this port
   ingress {
-    description      = "Allow HTTP traffic on port 8083"
+    description      = "Allow HTTP traffic on port 30000"
     from_port        = 30000
     to_port          = 30000
     protocol         = "tcp"
