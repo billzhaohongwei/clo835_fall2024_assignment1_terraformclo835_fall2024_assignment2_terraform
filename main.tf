@@ -61,7 +61,17 @@ resource "aws_security_group" "my_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
+  
+  ingress {
+    description      = "Allow HTTP traffic on port 8083"
+    from_port        = 30000
+    to_port          = 30000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"] # Allow from anywhere (use cautiously)
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
+/*
   # Allow HTTP traffic on port 8081
   ingress {
     description      = "Allow HTTP traffic on port 8081"
@@ -91,7 +101,7 @@ resource "aws_security_group" "my_sg" {
     cidr_blocks      = ["0.0.0.0/0"] # Allow from anywhere (use cautiously)
     ipv6_cidr_blocks = ["::/0"]
   }
-
+*/
   egress {
     from_port        = 0
     to_port          = 0
